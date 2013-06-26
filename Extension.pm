@@ -30,7 +30,12 @@ use Digest::MD5 qw(md5_hex);
 
 our $VERSION = '1.0';
 
-sub bug_end_of_create 
+use constant CONFIG_HOST=>'https://prod.practitest.com'; #or http://demo.practitest.com
+use constant CONFIG_API_KEY=>'key-apikey'; #copy this from your account settings
+use constant CONFIG_API_SECRET_KEY=>'you_api_secret_key'; #copy this from your account settings
+use constant  CONFIG_VERSION=>'1.0';
+
+sub bug_end_of_create
 {
   my ($self, $args) = @_;
 
@@ -44,7 +49,7 @@ sub bug_end_of_create
   }
 }
 
-sub bug_end_of_update 
+sub bug_end_of_update
 {
   my ($self, $args) = @_;
 
@@ -128,13 +133,13 @@ sub _notify_practitest
   my $client = REST::Client->new();
   $client->setHost($host);
   $client->PUT(
-    $url, 
+    $url,
     $payload,
     $headers
   );
   my $response =decode_json ($client->responseContent());
   #	warn "_notify_practitest_response=".Dumper($response);
-  if (defined $response->{'error'}) 
+  if (defined $response->{'error'})
   {
     warn  "Practitest error response=".$response->{'error'};
   }

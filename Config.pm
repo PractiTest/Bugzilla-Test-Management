@@ -46,9 +46,4 @@ use constant REQUIRED_MODULES => [
 
 ];
 
-use constant CONFIG_HOST=>'https://prod.practitest.com'; #or http://demo.practitest.com
-use constant CONFIG_API_KEY=>'key-apikey'; #copy this from your account settings
-use constant CONFIG_API_SECRET_KEY=>'you_api_secret_key'; #copy this from your account settings
-use constant  CONFIG_VERSION=>'1.0';
-
 __PACKAGE__->NAME;
