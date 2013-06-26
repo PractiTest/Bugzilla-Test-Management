@@ -35,6 +35,8 @@ use constant CONFIG_API_KEY=>'key-apikey'; #copy this from your account settings
 use constant CONFIG_API_SECRET_KEY=>'you_api_secret_key'; #copy this from your account settings
 use constant  CONFIG_VERSION=>'1.0';
 
+use constant NAME => 'PractiTest';
+
 sub bug_end_of_create
 {
   my ($self, $args) = @_;
