@@ -133,8 +133,10 @@ sub _notify_practitest
   my $headers = {Content_Type => 'application/json', Accept => 'application/json', Authorization => _create_authorization_value()};
 
 
-# Sometimes (Ubuntu 12.04) this line is needed on https:
+# Sometimes (Ubuntu 12.04) this line is needed on https (to support SSLv3):
 # $ENV{HTTPS_CA_DIR} = '/etc/ssl/certs/';
+# OR this line:
+# $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 
   my $client = REST::Client->new();
   $client->setHost($host);
