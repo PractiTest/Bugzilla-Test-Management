@@ -27,7 +27,13 @@ use Data::Dumper;
 use REST::Client;
 use JSON;
 
-our $VERSION = '1.0';
+our $VERSION = '1.1.0';
+
+use constant CONFIG_HOST=>'https://api.practitest.com';
+use constant CONFIG_API_TOKEN=>'your_api_token'; #copy this from your account -> keys
+use constant CONFIG_VERSION=>'1.1.0';
+use constant NAME => 'PractiTest';
+
 
 sub bug_end_of_create
 {
@@ -110,6 +116,12 @@ sub _notify_practitest
   my $payload = encode_json(\%json_data);
 
   my $headers = {Content_Type => 'application/json', Accept => 'application/json', Authorization => "custom api_token=".CONFIG_API_TOKEN};
+
+
+# Sometimes (Ubuntu 12.04) this line is needed on https (to support SSLv3):
+# $ENV{HTTPS_CA_DIR} = '/etc/ssl/certs/';
+# OR this line:
+# $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 
   my $client = REST::Client->new();
   $client->setHost($host);

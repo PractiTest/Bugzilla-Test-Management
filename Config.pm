@@ -40,8 +40,4 @@ use constant REQUIRED_MODULES => [
     },
 ];
 
-use constant CONFIG_HOST=>'https://api.practitest.com';
-use constant CONFIG_API_TOKEN=>'your_api_token'; #copy this from your account -> keys
-use constant  CONFIG_VERSION=>'1.1.0';
-
 __PACKAGE__->NAME;
