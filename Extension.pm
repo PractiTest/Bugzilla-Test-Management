@@ -26,11 +26,10 @@ use base qw(Bugzilla::Extension);
 use Data::Dumper;
 use REST::Client;
 use JSON;
-use Digest::MD5 qw(md5_hex);
 
 our $VERSION = '1.0';
 
-sub bug_end_of_create 
+sub bug_end_of_create
 {
   my ($self, $args) = @_;
 
@@ -44,7 +43,7 @@ sub bug_end_of_create
   }
 }
 
-sub bug_end_of_update 
+sub bug_end_of_update
 {
   my ($self, $args) = @_;
 
@@ -92,26 +91,13 @@ sub _is_pt_bug_changes
   return 0;
 }
 
-sub _create_authorization_value
-{
-  my $timestamp   = time;
-  my $signature=md5_hex(CONFIG_API_KEY.CONFIG_API_SECRET_KEY . $timestamp);
-
-  my $result = '';
-  $result .= "custom api_key=".CONFIG_API_KEY;
-  $result .= ", signature=" . $signature;
-  $result .= ", ts=" . $timestamp;
-
-  return $result;
-}
-
 sub _notify_practitest
 {
   my ($bug) = shift;
 
   my $host = CONFIG_HOST;
   $host .= '/' unless $host =~ m(\/$);
-  my $url = "api/integration_issues/" . $bug->cf_pt_id .".json?v=".CONFIG_VERSION;
+  my $url = "api/v1/integration_issues/" . $bug->cf_pt_id .".json?source=bugzilla_plugin&plugin_version=".CONFIG_VERSION;
 
   my %json_data = (
     integration_issue => {
@@ -123,18 +109,18 @@ sub _notify_practitest
   #translate the perl hash in json notation
   my $payload = encode_json(\%json_data);
 
-  my $headers = {Content_Type => 'application/json', Accept => 'application/json', Authorization => _create_authorization_value()};
+  my $headers = {Content_Type => 'application/json', Accept => 'application/json', Authorization => "custom api_token=".CONFIG_API_TOKEN};
 
   my $client = REST::Client->new();
   $client->setHost($host);
   $client->PUT(
-    $url, 
+    $url,
     $payload,
     $headers
   );
   my $response =decode_json ($client->responseContent());
   #	warn "_notify_practitest_response=".Dumper($response);
-  if (defined $response->{'error'}) 
+  if (defined $response->{'error'})
   {
     warn  "Practitest error response=".$response->{'error'};
   }

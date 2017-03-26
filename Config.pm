@@ -38,17 +38,10 @@ use constant REQUIRED_MODULES => [
         module  => 'JSON',
         version => 0,
     },
-    {
-        package => 'Digest-MD5',
-        module  => 'Digest::MD5',
-        version => 0,
-    },
-
 ];
 
-use constant CONFIG_HOST=>'https://prod.practitest.com'; #or http://demo.practitest.com
-use constant CONFIG_API_KEY=>'key-apikey'; #copy this from your account settings
-use constant CONFIG_API_SECRET_KEY=>'you_api_secret_key'; #copy this from your account settings
-use constant  CONFIG_VERSION=>'1.0';
+use constant CONFIG_HOST=>'https://api.practitest.com';
+use constant CONFIG_API_TOKEN=>'your_api_token'; #copy this from your account -> keys
+use constant  CONFIG_VERSION=>'1.1.0';
 
 __PACKAGE__->NAME;
